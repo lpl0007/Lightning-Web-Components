@@ -14,9 +14,9 @@
     <!-- Bottom -->
     <lightning-layout-item size="12" class="slds-p-top_small slds-is-relative">
       <!-- Spinner goes here -->
-       if {isLoading} {
-        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
-       }
+       <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand"></lightning-spinner>
+      </template>
       <!-- boatSearchResults goes here -->
       <!-- onloading={handleLoading} ondoneloading={handleDoneLoading} -->
         <c-boat-search-results onloading={handleLoading} ondoneloading={handleDoneLoading}></c-boat-search-results>
