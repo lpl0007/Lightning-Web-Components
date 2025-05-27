@@ -29,14 +29,16 @@ export default class BoatSearchResults extends LightningElement {
   messageContext;
 
   // wired getBoats method
-  @wire(getBoats, { boatTypeId: '$boatTypeId' })
-  wiredBoats(result) {
-    this.boats = result;
-    if (result.error) {
-      this.notifyLoading(false);
-      this.showToast(ERROR_TITLE, result.error.body.message, ERROR_VARIANT);
+ @wire(getBoats, { boatTypeId: '$boatTypeId' })
+    wiredBoats(result) {
+      if (result.data) {
+        this.boats = result.data;
+        this.notifyLoading(false);
+      } else if (result.error) {
+        this.notifyLoading(false);
+        this.showToast(ERROR_TITLE, result.error.body.message, ERROR_VARIANT);
+      }
     }
-  }
   
   // public function that updates the existing boatTypeId property
   // uses notifyLoading
@@ -108,5 +110,15 @@ export default class BoatSearchResults extends LightningElement {
     } else {
       this.dispatchEvent(new CustomEvent('doneloading'));
     }
+  }
+
+  showToast(title, message, variant) {
+    this.dispatchEvent(
+      new ShowToastEvent({
+        title: title,
+        message: message,
+        variant: variant
+      })
+    );
   }
 }

@@ -59,24 +59,24 @@ export default class BoatsNearMe extends LightningElement {
   
   // Creates the map markers
   createMapMarkers(boatData) {
-     // const newMarkers = boatData.map(boat => {...});
-     // newMarkers.unshift({...});
-     this.mapMarkers = boatData.map(boat => {
-       return {
-         location: {
-           Latitude: boat.Geolocation__Latitude__s,
-           Longitude: boat.Geolocation__Longitude__s
-         },
-         title: boat.Name
-       };
-     });
-      this.mapMarkers.unshift({
+    // Parse the JSON string to an array of objects
+    const boats = JSON.parse(boatData);
+    this.mapMarkers = boats.map(boat => {
+      return {
         location: {
-          Latitude: this.latitude,
-          Longitude: this.longitude
+          latitude: boat.Geolocation__Latitude__s,
+          longitude: boat.Geolocation__Longitude__s
         },
-        title: LABEL_YOU_ARE_HERE,
-        icon: ICON_STANDARD_USER
-      });
-   }
+        title: boat.Name
+      };
+    });
+    this.mapMarkers.unshift({
+      location: {
+        latitude: this.latitude,
+        longitude: this.longitude
+      },
+      title: LABEL_YOU_ARE_HERE,
+      icon: ICON_STANDARD_USER
+    });
+  }
 }

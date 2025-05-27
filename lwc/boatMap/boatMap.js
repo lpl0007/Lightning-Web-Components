@@ -66,7 +66,15 @@ handleMessage(message) {
 }
 
 updateMap(Longitude, Latitude) {
-    this.mapMarkers = [Longitude,Latitude];
+    this.mapMarkers = [
+        {
+            location: {
+                latitude: Latitude,
+                longitude: Longitude
+            },
+            title: 'Boat Location'
+        }
+    ];
 }
 
 get showMap() {
